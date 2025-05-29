@@ -1,0 +1,15 @@
+# Site settings
+title: Emanuel Linardakis
+description: "A personal website"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://emanlinar.github.io" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+theme: minima # This tells Jekyll to use a built-in theme
+permalink: /:title/ # Makes your blog post URLs cleaner (e.g., /my-first-post/)
+
+# Social media links (Optional, add your own)
+github_username: Emanlinar
+linkedin_username: https://www.linkedin.com/in/emanuellinardakis/
+email: emanuellinardakis@gmail.com
