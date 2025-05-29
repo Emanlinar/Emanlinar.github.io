@@ -281,8 +281,8 @@
                         <li>
                             Statistical Methods for Data Science: Applied statistical concepts to data analysis, including hypothesis testing, regression analysis, and probability distributions relevant to data science.
                         </li>
-                         <li>
-                            Computer Science 1: Advanced Algorithms, Data Structures, Sorting/Searching methods, and coding principles illustrated in the C language.
+                        <li>
+                            Computer Science 1: Advanced Algorithm Analysis, Data Structures, and coding principles illustrated in the C language.
                         </li>
                     </ul>
                 </div>
@@ -356,7 +356,7 @@
                 <div class="mb-4 p-4 rounded-lg shadow-md bg-gray-800 hover:bg-gray-700 transition-colors duration-300">
                     <h2 class="text-xl md:text-2xl font-semibold text-purple-400 flex items-center">
                         <a
-                            href="mailto:emanuellinardakis@gmail.com"
+                            href="mailto:emanuellinardakis@gmail.com?subject=Inquiry from your Personal Website"
                             class="flex items-center text-gray-200 w-full h-full"
                         >
                             Email
@@ -417,30 +417,61 @@
                     otherFullContent.closest('.blog-post').querySelector('.read-more-btn').textContent = 'Read More →';
                 }
             });
-
-            // Now, toggle the visibility of the clicked post
+        
             if (isActive) {
-                // If it was active, hide it
+                // If active, hide it
                 fullContent.classList.remove('active');
                 excerpt.style.display = 'block';
                 readMoreBtn.textContent = 'Read More →';
             } else {
-                // If it was not active, show it
+                // If not active, show it
                 fullContent.classList.add('active');
-                excerpt.style.display = 'none';
+                excerpt.style.display = 'none'; // Hide the excerpt
                 readMoreBtn.textContent = '← Back to Blog List';
             }
         }
 
-        // Initialize active nav item on load (for initial page load)
+        // Smooth scrolling for navigation links
         document.addEventListener('DOMContentLoaded', () => {
-            const initialActiveSection = 'about-me';
-            const initialButton = document.querySelector(`.nav-item[data-section-id="${initialActiveSection}"]`);
+            const navButtons = document.querySelectorAll('nav button');
+            const sections = document.querySelectorAll('main section');
+            let activeSectionId = 'about-me'; // Default active section
+
+            // Set initial active state based on default
+            const initialButton = document.querySelector(`.nav-item[data-section-id="${activeSectionId}"]`);
             if (initialButton) {
                 initialButton.classList.add('bg-purple-700', 'text-white', 'shadow-md');
                 initialButton.classList.remove('text-gray-400', 'hover:bg-gray-700', 'hover:text-purple-400');
             }
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -50% 0px', // Trigger when section is 50% in view
+                threshold: 0 // Only needs to be slightly visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        activeSectionId = entry.target.id;
+                        navButtons.forEach(button => {
+                            if (button.dataset.sectionId === activeSectionId) {
+                                button.classList.add('bg-purple-700', 'text-white', 'shadow-md');
+                                button.classList.remove('text-gray-400', 'hover:bg-gray-700', 'hover:text-purple-400');
+                            } else {
+                                button.classList.remove('bg-purple-700', 'text-white', 'shadow-md');
+                                button.classList.add('text-gray-400', 'hover:bg-gray-700', 'hover:text-purple-400');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
         });
     </script>
+
 </body>
 </html>
